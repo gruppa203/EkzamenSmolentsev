@@ -1,0 +1,43 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:EkzamenSmolentsev.Okna"
+      xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="EkzamenSmolentsev.Okna.Tovari"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Tovari">
+
+    <Grid Background="#FF9DC2DC">
+        <StackPanel Margin="0,101,0,71" Orientation="Vertical">
+            <StackPanel  HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Vertical" Margin="7">
+                <TextBox HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+            </StackPanel>
+
+
+
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Vertical" Height="240">
+                <DataGrid HorizontalAlignment="Left" Height="249" VerticalAlignment="Top" Width="800">
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Width="auto" Header="Наименование" Binding="{Binding Nazvanie}"/>
+                        <DataGridTextColumn Width="auto" Header="Описание" Binding="{Binding Opisanie}"/>
+                        <DataGridTextColumn Width="auto" Header="Производитель" Binding="{Binding Proizvoditel}"/>
+                        <DataGridTextColumn Width="auto" Header="Стоимость" Binding="{Binding Stoimosty}"/>
+                        <DataGridTextColumn Width="auto" Header="Размер скидки" Binding="{Binding Deystv_Skidka}"/>
+                    </DataGrid.Columns>
+                    <System:String>&gt;</System:String>
+                </DataGrid>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel  Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="15">
+            <Button Style="{StaticResource Knopki}" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="28" Click="Button_Click"/>
+
+
+
+        </StackPanel>
+
+
+
+    </Grid>
+</Page>

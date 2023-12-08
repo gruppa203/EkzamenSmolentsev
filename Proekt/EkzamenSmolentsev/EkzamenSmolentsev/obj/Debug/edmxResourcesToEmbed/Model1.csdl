@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BdSmolentsevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="BdSmolentsevEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Kategorii" EntityType="BdSmolentsevModel.Kategorii" />
+    <EntitySet Name="Roli" EntityType="BdSmolentsevModel.Roli" />
+    <EntitySet Name="Polzovateli" EntityType="BdSmolentsevModel.Polzovateli" />
+    <EntitySet Name="Tovari" EntityType="BdSmolentsevModel.Tovari" />
+    <AssociationSet Name="FK_Tovari_Kategorii" Association="BdSmolentsevModel.FK_Tovari_Kategorii">
+      <End Role="Kategorii" EntitySet="Kategorii" />
+      <End Role="Tovari" EntitySet="Tovari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Polzovateli_Roli" Association="BdSmolentsevModel.FK_Polzovateli_Roli">
+      <End Role="Roli" EntitySet="Roli" />
+      <End Role="Polzovateli" EntitySet="Polzovateli" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Kategorii">
+    <Key>
+      <PropertyRef Name="Kod_Kategorii" />
+    </Key>
+    <Property Name="Kod_Kategorii" Type="Int32" Nullable="false" />
+    <Property Name="Nazvanie_Kategorii" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Tovari" Relationship="BdSmolentsevModel.FK_Tovari_Kategorii" FromRole="Kategorii" ToRole="Tovari" />
+  </EntityType>
+  <EntityType Name="Roli">
+    <Key>
+      <PropertyRef Name="Kod_Roli" />
+    </Key>
+    <Property Name="Kod_Roli" Type="Int32" Nullable="false" />
+    <Property Name="Nazvanie_Roli" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Polzovateli" Relationship="BdSmolentsevModel.FK_Polzovateli_Roli" FromRole="Roli" ToRole="Polzovateli" />
+  </EntityType>
+  <EntityType Name="Polzovateli">
+    <Key>
+      <PropertyRef Name="Kod_Polzpvately" />
+      <PropertyRef Name="Familia" />
+      <PropertyRef Name="Otchestvo" />
+      <PropertyRef Name="Login" />
+      <PropertyRef Name="Rolis" />
+    </Key>
+    <Property Name="Kod_Polzpvately" Type="Int32" Nullable="false" />
+    <Property Name="Familia" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="imy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Otchestvo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Parol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Rolis" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Roli" Relationship="BdSmolentsevModel.FK_Polzovateli_Roli" FromRole="Polzovateli" ToRole="Roli" />
+  </EntityType>
+  <EntityType Name="Tovari">
+    <Key>
+      <PropertyRef Name="Kod_Tovara" />
+      <PropertyRef Name="Articul" />
+      <PropertyRef Name="Nazvanie" />
+      <PropertyRef Name="Edenicha_Izmereniy" />
+      <PropertyRef Name="Stoimosty" />
+      <PropertyRef Name="Max_Skidka" />
+      <PropertyRef Name="Proizvoditel" />
+      <PropertyRef Name="Postavhik" />
+      <PropertyRef Name="Kategorii" />
+      <PropertyRef Name="Deystv_Skidka" />
+      <PropertyRef Name="Kolichestvo_Na_Sklade" />
+      <PropertyRef Name="Opisanie" />
+    </Key>
+    <Property Name="Kod_Tovara" Type="Int32" Nullable="false" />
+    <Property Name="Articul" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Nazvanie" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Edenicha_Izmereniy" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="Stoimosty" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Max_Skidka" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Proizvoditel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Postavhik" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Kategorii" Type="Int32" Nullable="false" />
+    <Property Name="Deystv_Skidka" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Kolichestvo_Na_Sklade" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="Opisanie" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Izobrazhenie" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Kategorii1" Relationship="BdSmolentsevModel.FK_Tovari_Kategorii" FromRole="Tovari" ToRole="Kategorii" />
+  </EntityType>
+  <Association Name="FK_Tovari_Kategorii">
+    <End Type="BdSmolentsevModel.Kategorii" Role="Kategorii" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="BdSmolentsevModel.Tovari" Role="Tovari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategorii">
+        <PropertyRef Name="Kod_Kategorii" />
+      </Principal>
+      <Dependent Role="Tovari">
+        <PropertyRef Name="Kategorii" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Polzovateli_Roli">
+    <End Type="BdSmolentsevModel.Roli" Role="Roli" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="BdSmolentsevModel.Polzovateli" Role="Polzovateli" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roli">
+        <PropertyRef Name="Kod_Roli" />
+      </Principal>
+      <Dependent Role="Polzovateli">
+        <PropertyRef Name="Rolis" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

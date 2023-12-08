@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище BdSmolentsevModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Kategorii">
+          <Key>
+            <PropertyRef Name="Kod_Kategorii" />
+          </Key>
+          <Property Name="Kod_Kategorii" Type="int" Nullable="false" />
+          <Property Name="Nazvanie_Kategorii" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "BdSmolentsev.dbo.Polzovateli" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="Polzovateli">
+          <Key>
+            <PropertyRef Name="Kod_Polzpvately" />
+            <PropertyRef Name="Familia" />
+            <PropertyRef Name="Otchestvo" />
+            <PropertyRef Name="Login" />
+            <PropertyRef Name="Rolis" />
+          </Key>
+          <Property Name="Kod_Polzpvately" Type="int" Nullable="false" />
+          <Property Name="Familia" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="imy" Type="nvarchar" MaxLength="50" />
+          <Property Name="Otchestvo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Parol" Type="nvarchar" MaxLength="50" />
+          <Property Name="Rolis" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roli">
+          <Key>
+            <PropertyRef Name="Kod_Roli" />
+          </Key>
+          <Property Name="Kod_Roli" Type="int" Nullable="false" />
+          <Property Name="Nazvanie_Roli" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "BdSmolentsev.dbo.Tovari" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="Tovari">
+          <Key>
+            <PropertyRef Name="Kod_Tovara" />
+            <PropertyRef Name="Articul" />
+            <PropertyRef Name="Nazvanie" />
+            <PropertyRef Name="Edenicha_Izmereniy" />
+            <PropertyRef Name="Stoimosty" />
+            <PropertyRef Name="Max_Skidka" />
+            <PropertyRef Name="Proizvoditel" />
+            <PropertyRef Name="Postavhik" />
+            <PropertyRef Name="Kategorii" />
+            <PropertyRef Name="Deystv_Skidka" />
+            <PropertyRef Name="Kolichestvo_Na_Sklade" />
+            <PropertyRef Name="Opisanie" />
+          </Key>
+          <Property Name="Kod_Tovara" Type="int" Nullable="false" />
+          <Property Name="Articul" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Nazvanie" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Edenicha_Izmereniy" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="Stoimosty" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Max_Skidka" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Proizvoditel" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Postavhik" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Kategorii" Type="int" Nullable="false" />
+          <Property Name="Deystv_Skidka" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Kolichestvo_Na_Sklade" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Opisanie" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Izobrazhenie" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <Association Name="FK_Polzovateli_Roli">
+          <End Role="Roli" Type="Self.Roli" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Polzovateli" Type="Self.Polzovateli" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roli">
+              <PropertyRef Name="Kod_Roli" />
+            </Principal>
+            <Dependent Role="Polzovateli">
+              <PropertyRef Name="Rolis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tovari_Kategorii">
+          <End Role="Kategorii" Type="Self.Kategorii" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tovari" Type="Self.Tovari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorii">
+              <PropertyRef Name="Kod_Kategorii" />
+            </Principal>
+            <Dependent Role="Tovari">
+              <PropertyRef Name="Kategorii" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище BdSmolentsevModelContainer">
+          <EntitySet Name="Kategorii" EntityType="Self.Kategorii" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roli" EntityType="Self.Roli" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Polzovateli" EntityType="Self.Polzovateli" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Polzovateli].[Kod_Polzpvately] AS [Kod_Polzpvately], 
+    [Polzovateli].[Familia] AS [Familia], 
+    [Polzovateli].[imy] AS [imy], 
+    [Polzovateli].[Otchestvo] AS [Otchestvo], 
+    [Polzovateli].[Login] AS [Login], 
+    [Polzovateli].[Parol] AS [Parol], 
+    [Polzovateli].[Rolis] AS [Rolis]
+    FROM [dbo].[Polzovateli] AS [Polzovateli]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Tovari" EntityType="Self.Tovari" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Tovari].[Kod_Tovara] AS [Kod_Tovara], 
+    [Tovari].[Articul] AS [Articul], 
+    [Tovari].[Nazvanie] AS [Nazvanie], 
+    [Tovari].[Edenicha_Izmereniy] AS [Edenicha_Izmereniy], 
+    [Tovari].[Stoimosty] AS [Stoimosty], 
+    [Tovari].[Max_Skidka] AS [Max_Skidka], 
+    [Tovari].[Proizvoditel] AS [Proizvoditel], 
+    [Tovari].[Postavhik] AS [Postavhik], 
+    [Tovari].[Kategorii] AS [Kategorii], 
+    [Tovari].[Deystv_Skidka] AS [Deystv_Skidka], 
+    [Tovari].[Kolichestvo_Na_Sklade] AS [Kolichestvo_Na_Sklade], 
+    [Tovari].[Opisanie] AS [Opisanie], 
+    [Tovari].[Izobrazhenie] AS [Izobrazhenie]
+    FROM [dbo].[Tovari] AS [Tovari]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Polzovateli_Roli" Association="Self.FK_Polzovateli_Roli">
+            <End Role="Roli" EntitySet="Roli" />
+            <End Role="Polzovateli" EntitySet="Polzovateli" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tovari_Kategorii" Association="Self.FK_Tovari_Kategorii">
+            <End Role="Kategorii" EntitySet="Kategorii" />
+            <End Role="Tovari" EntitySet="Tovari" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BdSmolentsevModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BdSmolentsevEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Kategorii" EntityType="BdSmolentsevModel.Kategorii" />
+          <EntitySet Name="Roli" EntityType="BdSmolentsevModel.Roli" />
+          <EntitySet Name="Polzovateli" EntityType="BdSmolentsevModel.Polzovateli" />
+          <EntitySet Name="Tovari" EntityType="BdSmolentsevModel.Tovari" />
+          <AssociationSet Name="FK_Tovari_Kategorii" Association="BdSmolentsevModel.FK_Tovari_Kategorii">
+            <End Role="Kategorii" EntitySet="Kategorii" />
+            <End Role="Tovari" EntitySet="Tovari" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Polzovateli_Roli" Association="BdSmolentsevModel.FK_Polzovateli_Roli">
+            <End Role="Roli" EntitySet="Roli" />
+            <End Role="Polzovateli" EntitySet="Polzovateli" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Kategorii">
+          <Key>
+            <PropertyRef Name="Kod_Kategorii" />
+          </Key>
+          <Property Name="Kod_Kategorii" Type="Int32" Nullable="false" />
+          <Property Name="Nazvanie_Kategorii" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tovari" Relationship="BdSmolentsevModel.FK_Tovari_Kategorii" FromRole="Kategorii" ToRole="Tovari" />
+        </EntityType>
+        <EntityType Name="Roli">
+          <Key>
+            <PropertyRef Name="Kod_Roli" />
+          </Key>
+          <Property Name="Kod_Roli" Type="Int32" Nullable="false" />
+          <Property Name="Nazvanie_Roli" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Polzovateli" Relationship="BdSmolentsevModel.FK_Polzovateli_Roli" FromRole="Roli" ToRole="Polzovateli" />
+        </EntityType>
+        <EntityType Name="Polzovateli">
+          <Key>
+            <PropertyRef Name="Kod_Polzpvately" />
+            <PropertyRef Name="Familia" />
+            <PropertyRef Name="Otchestvo" />
+            <PropertyRef Name="Login" />
+            <PropertyRef Name="Rolis" />
+          </Key>
+          <Property Name="Kod_Polzpvately" Type="Int32" Nullable="false" />
+          <Property Name="Familia" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="imy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Otchestvo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Parol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Rolis" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Roli" Relationship="BdSmolentsevModel.FK_Polzovateli_Roli" FromRole="Polzovateli" ToRole="Roli" />
+        </EntityType>
+        <EntityType Name="Tovari">
+          <Key>
+            <PropertyRef Name="Kod_Tovara" />
+            <PropertyRef Name="Articul" />
+            <PropertyRef Name="Nazvanie" />
+            <PropertyRef Name="Edenicha_Izmereniy" />
+            <PropertyRef Name="Stoimosty" />
+            <PropertyRef Name="Max_Skidka" />
+            <PropertyRef Name="Proizvoditel" />
+            <PropertyRef Name="Postavhik" />
+            <PropertyRef Name="Kategorii" />
+            <PropertyRef Name="Deystv_Skidka" />
+            <PropertyRef Name="Kolichestvo_Na_Sklade" />
+            <PropertyRef Name="Opisanie" />
+          </Key>
+          <Property Name="Kod_Tovara" Type="Int32" Nullable="false" />
+          <Property Name="Articul" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Nazvanie" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Edenicha_Izmereniy" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="Stoimosty" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Max_Skidka" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Proizvoditel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Postavhik" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Kategorii" Type="Int32" Nullable="false" />
+          <Property Name="Deystv_Skidka" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Kolichestvo_Na_Sklade" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Opisanie" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Izobrazhenie" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Kategorii1" Relationship="BdSmolentsevModel.FK_Tovari_Kategorii" FromRole="Tovari" ToRole="Kategorii" />
+        </EntityType>
+        <Association Name="FK_Tovari_Kategorii">
+          <End Type="BdSmolentsevModel.Kategorii" Role="Kategorii" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BdSmolentsevModel.Tovari" Role="Tovari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorii">
+              <PropertyRef Name="Kod_Kategorii" />
+            </Principal>
+            <Dependent Role="Tovari">
+              <PropertyRef Name="Kategorii" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Polzovateli_Roli">
+          <End Type="BdSmolentsevModel.Roli" Role="Roli" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BdSmolentsevModel.Polzovateli" Role="Polzovateli" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roli">
+              <PropertyRef Name="Kod_Roli" />
+            </Principal>
+            <Dependent Role="Polzovateli">
+              <PropertyRef Name="Rolis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище BdSmolentsevModelContainer" CdmEntityContainer="BdSmolentsevEntities">
+          <EntitySetMapping Name="Kategorii">
+            <EntityTypeMapping TypeName="BdSmolentsevModel.Kategorii">
+              <MappingFragment StoreEntitySet="Kategorii">
+                <ScalarProperty Name="Nazvanie_Kategorii" ColumnName="Nazvanie_Kategorii" />
+                <ScalarProperty Name="Kod_Kategorii" ColumnName="Kod_Kategorii" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roli">
+            <EntityTypeMapping TypeName="BdSmolentsevModel.Roli">
+              <MappingFragment StoreEntitySet="Roli">
+                <ScalarProperty Name="Nazvanie_Roli" ColumnName="Nazvanie_Roli" />
+                <ScalarProperty Name="Kod_Roli" ColumnName="Kod_Roli" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Polzovateli">
+            <EntityTypeMapping TypeName="BdSmolentsevModel.Polzovateli">
+              <MappingFragment StoreEntitySet="Polzovateli">
+                <ScalarProperty Name="Rolis" ColumnName="Rolis" />
+                <ScalarProperty Name="Parol" ColumnName="Parol" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+                <ScalarProperty Name="imy" ColumnName="imy" />
+                <ScalarProperty Name="Familia" ColumnName="Familia" />
+                <ScalarProperty Name="Kod_Polzpvately" ColumnName="Kod_Polzpvately" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tovari">
+            <EntityTypeMapping TypeName="BdSmolentsevModel.Tovari">
+              <MappingFragment StoreEntitySet="Tovari">
+                <ScalarProperty Name="Izobrazhenie" ColumnName="Izobrazhenie" />
+                <ScalarProperty Name="Opisanie" ColumnName="Opisanie" />
+                <ScalarProperty Name="Kolichestvo_Na_Sklade" ColumnName="Kolichestvo_Na_Sklade" />
+                <ScalarProperty Name="Deystv_Skidka" ColumnName="Deystv_Skidka" />
+                <ScalarProperty Name="Kategorii" ColumnName="Kategorii" />
+                <ScalarProperty Name="Postavhik" ColumnName="Postavhik" />
+                <ScalarProperty Name="Proizvoditel" ColumnName="Proizvoditel" />
+                <ScalarProperty Name="Max_Skidka" ColumnName="Max_Skidka" />
+                <ScalarProperty Name="Stoimosty" ColumnName="Stoimosty" />
+                <ScalarProperty Name="Edenicha_Izmereniy" ColumnName="Edenicha_Izmereniy" />
+                <ScalarProperty Name="Nazvanie" ColumnName="Nazvanie" />
+                <ScalarProperty Name="Articul" ColumnName="Articul" />
+                <ScalarProperty Name="Kod_Tovara" ColumnName="Kod_Tovara" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

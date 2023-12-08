@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище BdSmolentsevModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Kategorii">
+    <Key>
+      <PropertyRef Name="Kod_Kategorii" />
+    </Key>
+    <Property Name="Kod_Kategorii" Type="int" Nullable="false" />
+    <Property Name="Nazvanie_Kategorii" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "BdSmolentsev.dbo.Polzovateli" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="Polzovateli">
+    <Key>
+      <PropertyRef Name="Kod_Polzpvately" />
+      <PropertyRef Name="Familia" />
+      <PropertyRef Name="Otchestvo" />
+      <PropertyRef Name="Login" />
+      <PropertyRef Name="Rolis" />
+    </Key>
+    <Property Name="Kod_Polzpvately" Type="int" Nullable="false" />
+    <Property Name="Familia" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="imy" Type="nvarchar" MaxLength="50" />
+    <Property Name="Otchestvo" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Parol" Type="nvarchar" MaxLength="50" />
+    <Property Name="Rolis" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roli">
+    <Key>
+      <PropertyRef Name="Kod_Roli" />
+    </Key>
+    <Property Name="Kod_Roli" Type="int" Nullable="false" />
+    <Property Name="Nazvanie_Roli" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "BdSmolentsev.dbo.Tovari" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="Tovari">
+    <Key>
+      <PropertyRef Name="Kod_Tovara" />
+      <PropertyRef Name="Articul" />
+      <PropertyRef Name="Nazvanie" />
+      <PropertyRef Name="Edenicha_Izmereniy" />
+      <PropertyRef Name="Stoimosty" />
+      <PropertyRef Name="Max_Skidka" />
+      <PropertyRef Name="Proizvoditel" />
+      <PropertyRef Name="Postavhik" />
+      <PropertyRef Name="Kategorii" />
+      <PropertyRef Name="Deystv_Skidka" />
+      <PropertyRef Name="Kolichestvo_Na_Sklade" />
+      <PropertyRef Name="Opisanie" />
+    </Key>
+    <Property Name="Kod_Tovara" Type="int" Nullable="false" />
+    <Property Name="Articul" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Nazvanie" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Edenicha_Izmereniy" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="Stoimosty" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Max_Skidka" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Proizvoditel" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Postavhik" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Kategorii" Type="int" Nullable="false" />
+    <Property Name="Deystv_Skidka" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Kolichestvo_Na_Sklade" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Opisanie" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Izobrazhenie" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <Association Name="FK_Polzovateli_Roli">
+    <End Role="Roli" Type="Self.Roli" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Polzovateli" Type="Self.Polzovateli" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roli">
+        <PropertyRef Name="Kod_Roli" />
+      </Principal>
+      <Dependent Role="Polzovateli">
+        <PropertyRef Name="Rolis" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tovari_Kategorii">
+    <End Role="Kategorii" Type="Self.Kategorii" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Tovari" Type="Self.Tovari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kategorii">
+        <PropertyRef Name="Kod_Kategorii" />
+      </Principal>
+      <Dependent Role="Tovari">
+        <PropertyRef Name="Kategorii" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище BdSmolentsevModelContainer">
+    <EntitySet Name="Kategorii" EntityType="Self.Kategorii" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roli" EntityType="Self.Roli" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Polzovateli" EntityType="Self.Polzovateli" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Polzovateli].[Kod_Polzpvately] AS [Kod_Polzpvately], 
+    [Polzovateli].[Familia] AS [Familia], 
+    [Polzovateli].[imy] AS [imy], 
+    [Polzovateli].[Otchestvo] AS [Otchestvo], 
+    [Polzovateli].[Login] AS [Login], 
+    [Polzovateli].[Parol] AS [Parol], 
+    [Polzovateli].[Rolis] AS [Rolis]
+    FROM [dbo].[Polzovateli] AS [Polzovateli]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Tovari" EntityType="Self.Tovari" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [Tovari].[Kod_Tovara] AS [Kod_Tovara], 
+    [Tovari].[Articul] AS [Articul], 
+    [Tovari].[Nazvanie] AS [Nazvanie], 
+    [Tovari].[Edenicha_Izmereniy] AS [Edenicha_Izmereniy], 
+    [Tovari].[Stoimosty] AS [Stoimosty], 
+    [Tovari].[Max_Skidka] AS [Max_Skidka], 
+    [Tovari].[Proizvoditel] AS [Proizvoditel], 
+    [Tovari].[Postavhik] AS [Postavhik], 
+    [Tovari].[Kategorii] AS [Kategorii], 
+    [Tovari].[Deystv_Skidka] AS [Deystv_Skidka], 
+    [Tovari].[Kolichestvo_Na_Sklade] AS [Kolichestvo_Na_Sklade], 
+    [Tovari].[Opisanie] AS [Opisanie], 
+    [Tovari].[Izobrazhenie] AS [Izobrazhenie]
+    FROM [dbo].[Tovari] AS [Tovari]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Polzovateli_Roli" Association="Self.FK_Polzovateli_Roli">
+      <End Role="Roli" EntitySet="Roli" />
+      <End Role="Polzovateli" EntitySet="Polzovateli" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tovari_Kategorii" Association="Self.FK_Tovari_Kategorii">
+      <End Role="Kategorii" EntitySet="Kategorii" />
+      <End Role="Tovari" EntitySet="Tovari" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

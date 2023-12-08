@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище BdSmolentsevModelContainer" CdmEntityContainer="BdSmolentsevEntities">
+    <EntitySetMapping Name="Kategorii">
+      <EntityTypeMapping TypeName="BdSmolentsevModel.Kategorii">
+        <MappingFragment StoreEntitySet="Kategorii">
+          <ScalarProperty Name="Nazvanie_Kategorii" ColumnName="Nazvanie_Kategorii" />
+          <ScalarProperty Name="Kod_Kategorii" ColumnName="Kod_Kategorii" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roli">
+      <EntityTypeMapping TypeName="BdSmolentsevModel.Roli">
+        <MappingFragment StoreEntitySet="Roli">
+          <ScalarProperty Name="Nazvanie_Roli" ColumnName="Nazvanie_Roli" />
+          <ScalarProperty Name="Kod_Roli" ColumnName="Kod_Roli" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Polzovateli">
+      <EntityTypeMapping TypeName="BdSmolentsevModel.Polzovateli">
+        <MappingFragment StoreEntitySet="Polzovateli">
+          <ScalarProperty Name="Rolis" ColumnName="Rolis" />
+          <ScalarProperty Name="Parol" ColumnName="Parol" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+          <ScalarProperty Name="imy" ColumnName="imy" />
+          <ScalarProperty Name="Familia" ColumnName="Familia" />
+          <ScalarProperty Name="Kod_Polzpvately" ColumnName="Kod_Polzpvately" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tovari">
+      <EntityTypeMapping TypeName="BdSmolentsevModel.Tovari">
+        <MappingFragment StoreEntitySet="Tovari">
+          <ScalarProperty Name="Izobrazhenie" ColumnName="Izobrazhenie" />
+          <ScalarProperty Name="Opisanie" ColumnName="Opisanie" />
+          <ScalarProperty Name="Kolichestvo_Na_Sklade" ColumnName="Kolichestvo_Na_Sklade" />
+          <ScalarProperty Name="Deystv_Skidka" ColumnName="Deystv_Skidka" />
+          <ScalarProperty Name="Kategorii" ColumnName="Kategorii" />
+          <ScalarProperty Name="Postavhik" ColumnName="Postavhik" />
+          <ScalarProperty Name="Proizvoditel" ColumnName="Proizvoditel" />
+          <ScalarProperty Name="Max_Skidka" ColumnName="Max_Skidka" />
+          <ScalarProperty Name="Stoimosty" ColumnName="Stoimosty" />
+          <ScalarProperty Name="Edenicha_Izmereniy" ColumnName="Edenicha_Izmereniy" />
+          <ScalarProperty Name="Nazvanie" ColumnName="Nazvanie" />
+          <ScalarProperty Name="Articul" ColumnName="Articul" />
+          <ScalarProperty Name="Kod_Tovara" ColumnName="Kod_Tovara" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
